@@ -41,17 +41,64 @@ Startuplpc17xx.s, main.c (t), delay.c (t), systemlpc17xx.c (t), gpio.c (t)
 Header:
 Delay.h, stdutils.h, gpioi.h
 
-# PIN DIAGRAM :
- 
+
+
 
 # CIRCUIT DIAGRAM:
- 
+  <img width="720" height="1280" alt="WhatsApp Image 2026-09-17 at 21 25 01" src="https://github.com/user-attachments/assets/19278216-9efe-4615-b19e-e35e58084c42" />
+
  
 # PROGRAM:
+1. Arduino UNO – LED Blinking
+   void setup()
+{
+    pinMode(13, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(13, HIGH);
+    delay(1000);
+
+    digitalWrite(13, LOW);
+    delay(1000);
+}
+2. LPC1768 – LED Blinking
+
+#include <LPC17xx.h>
+
+void delay_ms(unsigned int ms)
+{
+    unsigned int i, j;
+
+    for(i = 0; i < ms; i++)
+        for(j = 0; j < 5000; j++);
+}
+
+int main()
+{
+    LPC_GPIO0->FIODIR |= (1 << 0);
+
+    while(1)
+    {
+        LPC_GPIO0->FIOSET = (1 << 0);
+        delay_ms(1000);
+
+        LPC_GPIO0->FIOCLR = (1 << 0);
+        delay_ms(1000);
+    }
+}
+
 
 
  
 # Output:
+Output:
+
+LED glows for 1 second and turns OFF for 1 second continuously.
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/9856cec0-9e1d-41f4-b0d6-4cb3d6924d97" />
+<img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/e4f1a741-2455-4a90-b9d9-70f52c6f7166" />
+
 
 
 
